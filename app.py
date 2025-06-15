@@ -44,7 +44,7 @@ def evaluate_answer(question, user_response):
     prompt = f"""
 You are a professional historian grading a student's paragraph response to a New York City-related question.
 
-Be a very strict grader. Only give a 5/5 if the answer is factually correct, historically detailed, and contextually rich. Deduct points for:
+Be a very strict grader. Only give a 5/5 if the answer is factually correct, historically detailed, and contextually rich. Only give a 4/5 in cases where a history major in college would have come up with the answer. Deduct points for:
 - Vagueness or generalizations
 - Missing key facts (dates, names, context)
 - Historical inaccuracies
@@ -77,7 +77,7 @@ Feedback: [2–3 sentence explanation justifying the score]
 
 # Streamlit UI
 st.title("🗽 NYC Trivia Challenge")
-st.write("Answer a tough New York City trivia or history question in a short paragraph. The AI will grade your response harshly—aim for accuracy and depth!")
+st.write("Answer a New York City trivia or history question in a short paragraph. Be accurate and detailed for a high score.")
 
 # Generate or reuse question
 if "question" not in st.session_state:
@@ -97,5 +97,5 @@ if st.button("Submit Answer"):
         st.info("Grading your response...")
         feedback = evaluate_answer(st.session_state.question, user_response)
         st.markdown("---")
-        st.markdown(f"### 🧾 Result\n{feedback}")
+        st.markdown(f"### Result\n{feedback}")
         st.markdown("---")
