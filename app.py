@@ -50,7 +50,7 @@ Be a very strict grader. Only give a 5/5 if the answer is factually correct, his
 - Historical inaccuracies
 - Weak structure or lack of relevance
 
-Do NOT award fractional scores. Only score in whole number increments from 1 to 5.
+Do NOT award fractional scores. Only score in whole number increments from 0 to 5.
 
 Here is the question and student response:
 
@@ -60,8 +60,8 @@ Student Response: {user_response}
 
 Provide feedback in the following format:
 
-Score: X / 5  
-Feedback: [2–3 sentence explanation justifying the score]
+Score: X / 5
+\nFeedback: [2–3 sentence explanation justifying the score]
 """
     try:
         response = client.chat.completions.create(
