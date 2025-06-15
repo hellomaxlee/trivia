@@ -44,7 +44,7 @@ def evaluate_answer(question, user_response):
     prompt = f"""
 You are a professional historian grading a student's paragraph response to a New York City-related question.
 
-Be a very strict grader. Only give a 5/5 if the answer is factually correct, historically detailed, and contextually rich. Only give a 4/5 in cases where a history major in college would have come up with the answer. Deduct points for:
+Be a very strict grader. Only give a 5/5 if the answer is factually correct and contextually rich. Only give a 4/5 in cases where college student well versed in the topic would have come up with the answer. Deduct points for:
 - Vagueness or generalizations
 - Missing key facts (dates, names, context)
 - Historical inaccuracies
