@@ -42,28 +42,38 @@ def get_random_question():
 # Function to evaluate answer using GPT
 def evaluate_answer(question, user_response):
     prompt = f"""
-You are a historian grading a student's short paragraph answer to the following NYC-related question:
+You are a professional historian grading a student's paragraph response to a New York City-related question.
 
-**Question:** {question}
+Be a very strict grader. Only give a 5/5 if the answer is factually correct, historically detailed, and contextually rich. Deduct points for:
+- Vagueness or generalizations
+- Missing key facts (dates, names, context)
+- Historical inaccuracies
+- Weak structure or lack of relevance
 
-**Student Answer:** {user_response}
+Do NOT award fractional scores. Only score in whole number increments from 1 to 5.
 
-Grade the response out of 5 based on factual accuracy, depth of detail, and relevance. Be a tough grader—only give 5 for near-perfect, highly detailed, and accurate answers. After the score, provide 2-3 sentences of constructive feedback explaining the grade.
+Here is the question and student response:
 
-Respond in this format:
-Score: X / 5
-Feedback: [your explanation]
+Question: {question}
+
+Student Response: {user_response}
+
+Provide feedback in the following format:
+
+Score: X / 5  
+Feedback: [2–3 sentence explanation justifying the score]
 """
     try:
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt}],
-            temperature=0.3,
+            temperature=0.2,
             max_tokens=250
         )
         return response.choices[0].message.content.strip()
     except Exception as e:
         return f"Error: {e}"
+
 
 # Streamlit UI
 st.title("🗽 NYC Trivia Challenge")
@@ -73,14 +83,14 @@ st.write("Answer a tough New York City trivia or history question in a short par
 if "question" not in st.session_state:
     st.session_state.question = get_random_question()
 
-st.subheader("📜 Your Question:")
+st.subheader("Your Question:")
 st.markdown(f"**{st.session_state.question}**")
 
 # User input
 user_response = st.text_area("Your Answer (write a short paragraph):", height=200)
 
 # Submit + evaluation
-if st.button("✅ Submit Answer"):
+if st.button("Submit Answer"):
     if not user_response.strip():
         st.warning("Please write something before submitting.")
     else:
@@ -89,6 +99,3 @@ if st.button("✅ Submit Answer"):
         st.markdown("---")
         st.markdown(f"### 🧾 Result\n{feedback}")
         st.markdown("---")
-        if st.button("🔄 Try Another Question"):
-            st.session_state.question = get_random_question()
-            st.experimental_rerun()
